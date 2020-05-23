@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -47,16 +46,16 @@ namespace N_1
             drv.FindElement(By.XPath("//input[@id='UnitsOnOrder']")).SendKeys("300");
             drv.FindElement(By.XPath("//input[@id='ReorderLevel']")).SendKeys("10");
             drv.FindElement(By.XPath("//input[@type='submit']")).Click();
-            drv.FindElement(By.XPath("//a[contains(text(),'kvas')]")).Click();            
-            Assert.AreEqual("kvas", drv.FindElement(By.XPath("//input[@value='kvas']")).GetAttribute("value").ToString());
-            Assert.AreEqual("Beverages", drv.FindElement(By.XPath("//select[@id='CategoryId']/option[@value='1']")).Text);
-            Assert.AreEqual("Pavlova, Ltd.", drv.FindElement(By.XPath("//select[@id='SupplierId']/option[@value='7']")).Text);
-            Assert.AreEqual("45,0000", drv.FindElement(By.XPath("//input[@value='45,0000']")).GetAttribute("value").ToString());
-            Assert.AreEqual("2.0l-6bottles", drv.FindElement(By.XPath("//input[@value='2.0l-6bottles']")).GetAttribute("value").ToString());
-            Assert.AreEqual("500", drv.FindElement(By.XPath("//input[@value='500']")).GetAttribute("value").ToString());
-            Assert.AreEqual("300", drv.FindElement(By.XPath("//input[@value='300']")).GetAttribute("value").ToString());
-            Assert.AreEqual("10", drv.FindElement(By.XPath("//input[@value='10']")).GetAttribute("value").ToString());
-            Assert.IsTrue(drv.FindElement(By.XPath("//input[@value='true']")).Enabled);
+            drv.FindElement(By.XPath("//a[contains(text(),'kvas')]")).Click();
+            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='ProductName']")).Displayed);
+            Assert.IsTrue(drv.FindElement(By.XPath("//select[@id='CategoryId']/option[1]")).Displayed);
+            Assert.IsTrue(drv.FindElement(By.XPath("//select[@id='SupplierId']/option[7]")).Displayed);
+            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='UnitPrice']")).Displayed);
+            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='QuantityPerUnit']")).Displayed);
+            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='UnitsInStock']")).Displayed);
+            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='UnitsOnOrder']")).Displayed);
+            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='ReorderLevel']")).Displayed);
+            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='Discontinued']")).Enabled);
         }
         //↓↓↓↓↓↓↓↓↓▬▬▬▬▬ Тест логаута ▬▬▬▬▬↓↓↓↓↓↓
         [Test]
