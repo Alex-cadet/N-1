@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -10,26 +11,27 @@ namespace N_1
     {
         private IWebDriver drv;
         [SetUp]
+        
         public void Setup()
         {
-
             drv = new ChromeDriver();
-            drv.Navigate().GoToUrl("http://localhost:5000/");
+            drv.Navigate().GoToUrl("http://localhost:5000/");           
             drv.Manage().Window.Maximize();
-            drv.FindElement(By.XPath("//*[@id='Name']")).SendKeys("user");
-            drv.FindElement(By.XPath("//*[@id='Password']")).SendKeys("user");
-            drv.FindElement(By.XPath("//input[@type='submit']")).Click();
         }
         //↓↓↓↓↓↓↓↓↓▬▬▬▬▬ Тест регистрации ▬▬▬▬▬↓↓↓↓↓↓
         [Test]
+        [System.Obsolete]
         public void Test1()
         {
-           Assert.AreEqual("Logout", drv.FindElement(By.XPath("//a[contains(text(),'Logout')]")).Text);
+            Sign.Reg(drv);
+            Assert.AreEqual("Logout", drv.FindElement(By.XPath("//a[contains(text(),'Logout')]")).Text);
         }
         //↓↓↓↓↓↓↓↓↓ ▬▬▬▬▬ Тест создания нового продукта: проверка полей ▬▬▬▬↓↓↓↓↓↓
         [Test]
         public void Test2()
         {
+            Sign.Reg(drv);
+            drv.Navigate().GoToUrl("http://localhost:5000/Product");
             drv.FindElement(By.XPath("//a[@href='/Product']")).Click();           
             drv.FindElement(By.XPath("//a[contains(text(),'Create new')]")).Click();
             drv.FindElement(By.XPath("//input[@id='ProductName']")).SendKeys("kvas");
@@ -46,7 +48,7 @@ namespace N_1
             drv.FindElement(By.XPath("//input[@id='ReorderLevel']")).SendKeys("10");
             drv.FindElement(By.XPath("//input[@type='submit']")).Click();
             drv.FindElement(By.XPath("//a[contains(text(),'kvas')]")).Click();            
-            Assert.AreEqual("kvas", drv.FindElement(By.XPath("//input[@id='ProductName']")).GetAttribute("value").ToString());            
+            Assert.AreEqual("kvas", drv.FindElement(By.XPath("//input[@value='kvas']")).GetAttribute("value").ToString());
             Assert.AreEqual("Beverages", drv.FindElement(By.XPath("//select[@id='CategoryId']/option[@value='1']")).Text);
             Assert.AreEqual("Pavlova, Ltd.", drv.FindElement(By.XPath("//select[@id='SupplierId']/option[@value='7']")).Text);
             Assert.AreEqual("45,0000", drv.FindElement(By.XPath("//input[@value='45,0000']")).GetAttribute("value").ToString());
@@ -58,10 +60,17 @@ namespace N_1
         }
         //↓↓↓↓↓↓↓↓↓▬▬▬▬▬ Тест логаута ▬▬▬▬▬↓↓↓↓↓↓
         [Test]
+        [Obsolete]
         public void Test3()
-        {           
-            Thread.Sleep(2000);
+        {
+            Sign.Reg(drv);           
             drv.FindElement(By.XPath("//a[@href='/Account/Logout']")).Click();
+            WebDriverWait wait = new WebDriverWait(drv, TimeSpan.FromSeconds(5));
+            wait.Timeout = TimeSpan.FromSeconds(5);
+            IWebElement el = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//input[@id='Name']")));
+            drv.FindElement(By.XPath("//input[@id='Name']"));
+            drv.FindElement(By.XPath("//input[@id='Password']"));
+            drv.FindElement(By.XPath("//input[@type='submit']"));
             Assert.IsNotNull(drv.FindElement(By.XPath("//input[@id='Name']")));
             Assert.IsNotNull(drv.FindElement(By.XPath("//input[@id='Password']")));
             Assert.IsNotNull(drv.FindElement(By.XPath("//input[@type='submit']")));
