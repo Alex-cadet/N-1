@@ -11,6 +11,8 @@ namespace N_1
 {
     class Sign
     {
+        private const string Login = "user";
+        private const string Password = "user";
         public Sign(IWebDriver drv)
         {
             this.drv = drv;
@@ -18,10 +20,8 @@ namespace N_1
         public  IWebDriver drv;
         public static IWebDriver Reg(IWebDriver drv)    
         {
-            
-            drv.FindElement(By.XPath("//*[@id='Name']")).SendKeys("user");
-            drv.FindElement(By.XPath("//*[@id='Password']")).SendKeys("user");
-            drv.FindElement(By.XPath("//input[@type='submit']")).Click();
+            Vhod vh = new Vhod(drv);
+            vh.LogPar($"{Login}", $"{Password}");                    
             return drv;
         }
     }
