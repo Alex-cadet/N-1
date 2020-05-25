@@ -47,15 +47,15 @@ namespace N_1
             drv.FindElement(By.XPath("//input[@id='ReorderLevel']")).SendKeys("10");
             drv.FindElement(By.XPath("//input[@type='submit']")).Click();
             drv.FindElement(By.XPath("//a[contains(text(),'kvas')]")).Click();
-            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='ProductName']")).Displayed);
-            Assert.IsTrue(drv.FindElement(By.XPath("//select[@id='CategoryId']/option[1]")).Displayed);
-            Assert.IsTrue(drv.FindElement(By.XPath("//select[@id='SupplierId']/option[7]")).Displayed);
-            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='UnitPrice']")).Displayed);
-            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='QuantityPerUnit']")).Displayed);
-            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='UnitsInStock']")).Displayed);
-            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='UnitsOnOrder']")).Displayed);
-            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='ReorderLevel']")).Displayed);
-            Assert.IsTrue(drv.FindElement(By.XPath("//input[@id='Discontinued']")).Enabled);
+            Assert.AreEqual(("kvas",drv.FindElement(By.XPath("//input[@id='ProductName']")).GetAttribute("value"));
+            Assert.AreEqual("Beverages",drv.FindElement(By.XPath("//select[@id='CategoryId']/option[1]")).Text);
+            Assert.AreEqual("Pavlova, Ltd.",drv.FindElement(By.XPath("//select[@id='SupplierId']/option[7]")).Text);
+            Assert.AreEqual(("45,0000",drv.FindElement(By.XPath("//input[@id='UnitPrice']")).GetAttribute("value"));
+            Assert.AreEqual("2.0l-6bottles",drv.FindElement(By.XPath("//input[@id='QuantityPerUnit']")).GetAttribute("value"));
+            Assert.AreEqual("500",drv.FindElement(By.XPath("//input[@id='UnitsInStock']")).GetAttribute("value"));
+            Assert.AreEqual("300",drv.FindElement(By.XPath("//input[@id='UnitsOnOrder']")).GetAttribute("value"));
+            Assert.AreEqual("10",drv.FindElement(By.XPath("//input[@id='ReorderLevel']")).GetAttribute("value"));
+            Assert.AreEqual("true",drv.FindElement(By.XPath("//input[@id='Discontinued']")).GetAttribute("value"));
         }
         //↓↓↓↓↓↓↓↓↓▬▬▬▬▬ Тест логаута ▬▬▬▬▬↓↓↓↓↓↓
         [Test]
