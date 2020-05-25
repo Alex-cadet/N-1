@@ -14,10 +14,14 @@ namespace N_1
         {
             this.drv = drv;
         }
-        IWebElement searchHref => drv.FindElement(By.XPath("//a[@href='/Account/Logout']"));
-        public void Goout()
+        IWebElement searchHrefLogout => drv.FindElement(By.XPath("//a[@href='/Account/Logout']"));
+        public string GetLogOut()
         {
-            new Actions(drv).Click(searchHref).Build().Perform();
+            return searchHrefLogout.Text;
+        }
+        public void LogOut()
+        {
+            new Actions(drv).Click(searchHrefLogout).Build().Perform();
         }
     }
 }

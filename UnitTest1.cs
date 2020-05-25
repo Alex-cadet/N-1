@@ -8,12 +8,19 @@ namespace N_1
 {
     public class Tests
     {
-             private string n = "kvas";
-             private string up = "45";
-             private string qp = "2.0l-6bottles";
-             private string uis = "500";
-             private string uoor = "300";
-             private string rl = "10";
+             private const string logOut = "Logout";
+             private const string Login = "user";
+             private const string Password = "user";
+             private string productName = "kvas";
+             private const string category = "Beverages";
+             private const string supplier = "Pavlova, Ltd.";
+             private string unitPrice = "45";
+             private string unitPriceValue = "45,0000";
+             private string quantityPerUnit = "2.0l-6bottles";
+             private string untInStock = "500";
+             private string unitOnOrder = "300";
+             private string reorderLevel = "10";
+             private string discontinued = "true";
              private IWebDriver drv;
         
         [SetUp]
@@ -29,38 +36,45 @@ namespace N_1
         [System.Obsolete]
         public void Test1()
         {
-            Sign.Reg(drv);
-            Assert.AreEqual("Logout", drv.FindElement(By.XPath("//a[contains(text(),'Logout')]")).Text);
+            LogIn vh = new LogIn(drv);
+            vh.SignIn($"{Login}", $"{Password}");
+            Exxit xe = new Exxit(drv);
+            Assert.AreEqual(logOut, xe.GetLogOut());
         }
         //↓↓↓↓↓↓↓↓↓ ▬▬▬▬▬ Тест создания нового продукта: проверка полей ▬▬▬▬↓↓↓↓↓↓
         [Test]
         public void Test2()
         {
-            Sign.Reg(drv);
+            LogIn vh = new LogIn(drv);
+            vh.SignIn($"{Login}", $"{Password}");
             drv.Navigate().GoToUrl("http://localhost:5000/Product");
             MainPage mp = new MainPage(drv);
-            mp.Neww($"{n}",$"{up}", $"{qp}", $"{uis}", $"{uoor}", $"{rl}");             
-            Assert.AreEqual("kvas",drv.FindElement(By.XPath("//input[@id='ProductName']")).GetAttribute("value"));
-            Assert.AreEqual("Beverages",drv.FindElement(By.XPath("//select[@id='CategoryId']/option[@value='1']")).Text);
-            Assert.AreEqual("Pavlova, Ltd.",drv.FindElement(By.XPath("//select[@id='SupplierId']/option[@value='7']")).Text);
-            Assert.AreEqual("45,0000",drv.FindElement(By.XPath("//input[@id='UnitPrice']")).GetAttribute("value"));
-            Assert.AreEqual("2.0l-6bottles", drv.FindElement(By.XPath("//input[@id='QuantityPerUnit']")).GetAttribute("value"));
-            Assert.AreEqual("500",drv.FindElement(By.XPath("//input[@id='UnitsInStock']")).GetAttribute("value"));
-            Assert.AreEqual("300",drv.FindElement(By.XPath("//input[@id='UnitsOnOrder']")).GetAttribute("value"));
-            Assert.AreEqual("10",drv.FindElement(By.XPath("//input[@id='ReorderLevel']")).GetAttribute("value"));
-            Assert.AreEqual("true", drv.FindElement(By.XPath("//input[@id='Discontinued']")).GetAttribute("value"));
+            mp.CreateNewProduct(productName, unitPrice, quantityPerUnit, untInStock, unitOnOrder, reorderLevel);
+            mp.Submit();
+            mp.CheckNewProduct();
+            Assert.AreEqual(productName, mp.GetProductName());
+            Assert.AreEqual(category, mp.GetCategory());
+            Assert.AreEqual(supplier, mp.GetSupplier());
+            Assert.AreEqual(unitPriceValue, mp.GetUnitPrice());
+            Assert.AreEqual(quantityPerUnit, mp.GetQuantityPerUnit());
+            Assert.AreEqual(untInStock, mp.GetUnitsInStock());
+            Assert.AreEqual(unitOnOrder, mp.GetUnitsOnOrder());
+            Assert.AreEqual(reorderLevel, mp.GetReorderLevel());
+            Assert.AreEqual(discontinued, mp.GetDiscontinued());
+
         }
         //↓↓↓↓↓↓↓↓↓▬▬▬▬▬ Тест логаута ▬▬▬▬▬↓↓↓↓↓↓
         [Test]
         [Obsolete]
         public void Test3()
         {
-            Sign.Reg(drv);
+            LogIn vh = new LogIn(drv);
+            vh.SignIn($"{Login}", $"{Password}");
             Exxit ex = new Exxit(drv);
-            ex.Goout();            
-            Assert.IsNotNull(drv.FindElement(By.XPath("//input[@id='Name']")));
-            Assert.IsNotNull(drv.FindElement(By.XPath("//input[@id='Password']")));
-            Assert.IsNotNull(drv.FindElement(By.XPath("//input[@type='submit']")));
+            ex.LogOut();            
+            Assert.IsNotNull(vh.GetName());
+            Assert.IsNotNull(vh.GetName());
+            Assert.IsNotNull(vh.GetbuttonSubmit());
         }
         [TearDown]
         public void Exit()
