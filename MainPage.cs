@@ -103,21 +103,5 @@ namespace N_1
             new Actions(drv).Click(search_hrefKvas).Build().Perform();
            
         }
-        //new Actions(drv).SendKeys(serachinputProductName, n).Build().Perform();
-        //var veb = searchinputCategory;
-        //var bev = new SelectElement(veb);
-        //bev.SelectByText("Beverages");
-        //var ltd = searchinputSupplier;
-        //var pavl = new SelectElement(ltd);
-        //pavl.SelectByText("Pavlova, Ltd.");
-        //new Actions(drv).SendKeys(searchinputUnitPrice, up).Build().Perform();
-        //new Actions(drv).SendKeys(searchinputQuantityPerUnit, qp).Build().Perform();
-        //new Actions(drv).SendKeys(searchinputUnitsInStock, uis).Build().Perform();
-        //new Actions(drv).SendKeys(searchinputUnitsOnOrder, uor).Build().Perform();
-        //new Actions(drv).SendKeys(searchinputReorderLevel, rl).Build().Perform();
-        //new Actions(drv).Click(searchbuttonSubmit).Build().Perform();
-        //new Actions(drv).Click(search_hrefKvas).Build().Perform();
-
-    //}
     }
 }
