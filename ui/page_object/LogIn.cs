@@ -16,10 +16,10 @@ namespace N_1
         IWebElement searchinputLogin => drv.FindElement(By.XPath("//*[@id='Name']"));
         IWebElement searchinputPassword => drv.FindElement(By.XPath("//*[@id='Password']"));
         IWebElement searchbuttonSubmit => drv.FindElement(By.XPath("//input[@type='submit']"));
-        public void SignIn(string Login,string Parol)
+        public void SignIn(string login,string parol)
         {
-            new Actions(drv).SendKeys(searchinputLogin, Login).Build().Perform();
-            new Actions(drv).SendKeys(searchinputPassword, Parol).Build().Perform();
+            new Actions(drv).SendKeys(searchinputLogin, login).Build().Perform();
+            new Actions(drv).SendKeys(searchinputPassword, parol).Build().Perform();
             new Actions(drv).Click(searchbuttonSubmit).Build().Perform();
         }
         public IWebElement GetName()

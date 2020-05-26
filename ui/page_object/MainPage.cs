@@ -7,7 +7,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace N_1
 {
-    class MainPage
+   public class MainPage
     {
         private IWebDriver drv;
         public MainPage(IWebDriver drv)
@@ -29,7 +29,7 @@ namespace N_1
         IWebElement searchbuttonSubmit => drv.FindElement(By.XPath("//input[@type='submit']"));
         IWebElement search_hrefKvas => drv.FindElement(By.XPath("//a[contains(text(),'kvas')]"));
         IWebElement searchcheckboxDiscontinued => drv.FindElement(By.XPath("//input[@id='Discontinued']"));
-        public void CreateNewProduct(string productName, string unitPrice, string quantityPerUnit,
+        public void CreateNewProduct(string productName, string category, string supplier, string unitPrice, string quantityPerUnit,
             string untInStock, string unitOnOrder, string reorderLevel)
         {
             new Actions(drv).Click(searchbuttonAllProducts).Build().Perform();
@@ -37,10 +37,10 @@ namespace N_1
             new Actions(drv).SendKeys(serachinputProductName, productName).Build().Perform();
             var veb = searchinputCategory;
             var bev = new SelectElement(veb);
-            bev.SelectByText("Beverages");
+            bev.SelectByText(category);
             var ltd = searchinputSupplier;
             var pavl = new SelectElement(ltd);
-            pavl.SelectByText("Pavlova, Ltd.");
+            pavl.SelectByText(supplier);
             new Actions(drv).SendKeys(searchinputUnitPrice, unitPrice).Build().Perform();
             new Actions(drv).SendKeys(searchinputQuantityPerUnit, quantityPerUnit).Build().Perform();
             new Actions(drv).SendKeys(searchinputUnitsInStock, untInStock).Build().Perform();
