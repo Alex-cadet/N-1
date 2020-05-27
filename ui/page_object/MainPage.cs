@@ -7,14 +7,14 @@ using OpenQA.Selenium.Support.UI;
 
 namespace N_1
 {
-   public class MainPage
+    public class MainPage
     {
         private IWebDriver drv;
         public MainPage(IWebDriver drv)
         {
             this.drv = drv;
         }
-        IWebElement searchbuttonAllProducts  => drv.FindElement(By.XPath("//a[@href='/Product']"));
+        IWebElement searchbuttonAllProducts => drv.FindElement(By.XPath("//a[@href='/Product']"));
         IWebElement searchbuttonCreateNew => drv.FindElement(By.XPath("//a[contains(text(),'Create new')]"));
         IWebElement serachinputProductName => drv.FindElement(By.XPath("//input[@id='ProductName']"));
         IWebElement searchinputCategory => drv.FindElement(By.XPath("//select[@id='CategoryId']"));
@@ -29,24 +29,39 @@ namespace N_1
         IWebElement searchbuttonSubmit => drv.FindElement(By.XPath("//input[@type='submit']"));
         IWebElement search_hrefKvas => drv.FindElement(By.XPath("//a[contains(text(),'kvas')]"));
         IWebElement searchcheckboxDiscontinued => drv.FindElement(By.XPath("//input[@id='Discontinued']"));
-        public void CreateNewProduct(string productName, string category, string supplier, string unitPrice, string quantityPerUnit,
-            string untInStock, string unitOnOrder, string reorderLevel)
+        public void ClickAllProduct()
         {
             new Actions(drv).Click(searchbuttonAllProducts).Build().Perform();
+        }
+        public void ClickCreateNew()
+        {
             new Actions(drv).Click(searchbuttonCreateNew).Build().Perform();
+        }
+        public void ChooseProduct(string productName)
+        {
             new Actions(drv).SendKeys(serachinputProductName, productName).Build().Perform();
+        }
+        public void SelectCategory(string category)
+        {
             var veb = searchinputCategory;
             var bev = new SelectElement(veb);
             bev.SelectByText(category);
-            var ltd = searchinputSupplier;
-            var pavl = new SelectElement(ltd);
-            pavl.SelectByText(supplier);
-            new Actions(drv).SendKeys(searchinputUnitPrice, unitPrice).Build().Perform();
-            new Actions(drv).SendKeys(searchinputQuantityPerUnit, quantityPerUnit).Build().Perform();
-            new Actions(drv).SendKeys(searchinputUnitsInStock, untInStock).Build().Perform();
-            new Actions(drv).SendKeys(searchinputUnitsOnOrder, unitOnOrder).Build().Perform();
-            new Actions(drv).SendKeys(searchinputReorderLevel, reorderLevel).Build().Perform();
         }
+        public void SelectSupplier(string supplier)
+        { 
+             var ltd = searchinputSupplier;
+             var pavl = new SelectElement(ltd);
+             pavl.SelectByText(supplier);
+        }
+        public void ChoosetUnitPrice(string unitPrice)
+        {
+            new Actions(drv).SendKeys(searchinputUnitPrice, unitPrice).Build().Perform();
+        }
+        //    new Actions(drv).SendKeys(searchinputQuantityPerUnit, quantityPerUnit).Build().Perform();
+        //    new Actions(drv).SendKeys(searchinputUnitsInStock, untInStock).Build().Perform();
+        //    new Actions(drv).SendKeys(searchinputUnitsOnOrder, unitOnOrder).Build().Perform();
+        //    new Actions(drv).SendKeys(searchinputReorderLevel, reorderLevel).Build().Perform();
+        //}
         public string GetProductName()
         {
 

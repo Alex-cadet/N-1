@@ -20,7 +20,7 @@ namespace N_1
         {
             new Actions(drv).SendKeys(searchinputLogin, login).Build().Perform();
             new Actions(drv).SendKeys(searchinputPassword, parol).Build().Perform();
-            new Actions(drv).Click(searchbuttonSubmit).Build().Perform();
+           
         }
         public IWebElement GetName()
         {
@@ -30,9 +30,9 @@ namespace N_1
         {
             return searchinputPassword;
         }
-        public IWebElement GetbuttonSubmit()
+        public void ClickbuttonSubmit()
         {
-            return searchbuttonSubmit;
+            new Actions(drv).Click(searchbuttonSubmit).Build().Perform();
         }
     }
 }
