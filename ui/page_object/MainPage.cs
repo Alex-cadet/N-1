@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using N_1.buisness_objects;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
@@ -9,6 +10,7 @@ namespace N_1
 {
     public class MainPage
     {
+        public Product drink = new Product("http://localhost:5000/", "user", "user", "kvas", "Beverages", "Pavlova, Ltd.", "45");
         private IWebDriver drv;
         public MainPage(IWebDriver drv)
         {
@@ -18,17 +20,13 @@ namespace N_1
         IWebElement searchbuttonCreateNew => drv.FindElement(By.XPath("//a[contains(text(),'Create new')]"));
         IWebElement serachinputProductName => drv.FindElement(By.XPath("//input[@id='ProductName']"));
         IWebElement searchinputCategory => drv.FindElement(By.XPath("//select[@id='CategoryId']"));
-        IWebElement searchinputCategoryValue => drv.FindElement(By.XPath("//select[@id='CategoryId']/option[@value='1']"));
+        IWebElement searchinputCategoryValue => drv.FindElement(By.XPath($"//select[@id='CategoryId']/option[text()='{drink.Category}']"));
         IWebElement searchinputSupplier => drv.FindElement(By.XPath("//select[@id='SupplierId']"));
-        IWebElement searchinputSupplierValue => drv.FindElement(By.XPath("//select[@id='SupplierId']/option[@value='7']"));
+        IWebElement searchinputSupplierValue => drv.FindElement(By.XPath($"//select[@id='SupplierId']/option[text()='{drink.Supplier}']"));
         IWebElement searchinputUnitPrice => drv.FindElement(By.XPath("//input[@id='UnitPrice']"));
-        IWebElement searchinputQuantityPerUnit => drv.FindElement(By.XPath("//input[@id='QuantityPerUnit']"));
-        IWebElement searchinputUnitsInStock => drv.FindElement(By.XPath("//input[@id='UnitsInStock']"));
-        IWebElement searchinputUnitsOnOrder => drv.FindElement(By.XPath("//input[@id='UnitsOnOrder']"));
-        IWebElement searchinputReorderLevel => drv.FindElement(By.XPath("//input[@id='ReorderLevel']"));
         IWebElement searchbuttonSubmit => drv.FindElement(By.XPath("//input[@type='submit']"));
-        IWebElement search_hrefKvas => drv.FindElement(By.XPath("//a[contains(text(),'kvas')]"));
-        IWebElement searchcheckboxDiscontinued => drv.FindElement(By.XPath("//input[@id='Discontinued']"));
+        IWebElement search_hrefNewProduct => drv.FindElement(By.XPath($"//a[text()='{drink.ProductName}']"));
+       
         public void ClickAllProduct()
         {
             new Actions(drv).Click(searchbuttonAllProducts).Build().Perform();
@@ -43,25 +41,21 @@ namespace N_1
         }
         public void SelectCategory(string category)
         {
-            var veb = searchinputCategory;
-            var bev = new SelectElement(veb);
-            bev.SelectByText(category);
+            var searchinputC = searchinputCategory;
+            var selectElementC = new SelectElement(searchinputC);
+            selectElementC.SelectByText(category);
         }
         public void SelectSupplier(string supplier)
         { 
-             var ltd = searchinputSupplier;
-             var pavl = new SelectElement(ltd);
-             pavl.SelectByText(supplier);
+             var searchinputS = searchinputSupplier;
+             var selectElementS = new SelectElement(searchinputS);
+            selectElementS.SelectByText(supplier);
         }
         public void ChoosetUnitPrice(string unitPrice)
         {
             new Actions(drv).SendKeys(searchinputUnitPrice, unitPrice).Build().Perform();
         }
-        //    new Actions(drv).SendKeys(searchinputQuantityPerUnit, quantityPerUnit).Build().Perform();
-        //    new Actions(drv).SendKeys(searchinputUnitsInStock, untInStock).Build().Perform();
-        //    new Actions(drv).SendKeys(searchinputUnitsOnOrder, unitOnOrder).Build().Perform();
-        //    new Actions(drv).SendKeys(searchinputReorderLevel, reorderLevel).Build().Perform();
-        //}
+       
         public string GetProductName()
         {
 
@@ -83,31 +77,7 @@ namespace N_1
         {
             
             return searchinputUnitPrice.GetAttribute("value");
-        }
-        public string GetQuantityPerUnit()
-        {
-             
-            return searchinputQuantityPerUnit.GetAttribute("value");
-        }
-        public string GetUnitsInStock()
-        {
-            
-            return searchinputUnitsInStock.GetAttribute("value");
-        }
-        public string GetUnitsOnOrder()
-        {
-           
-            return searchinputUnitsOnOrder.GetAttribute("value");
-        }
-        public string GetReorderLevel()
-        {
-             
-            return searchinputReorderLevel.GetAttribute("value");
-        }
-        public string GetDiscontinued()
-        {
-            return searchcheckboxDiscontinued.GetAttribute("value");
-        }
+        }       
         public void Submit()
         {
             new Actions(drv).Click(searchbuttonSubmit).Build().Perform();
@@ -115,7 +85,7 @@ namespace N_1
         }
         public void CheckNewProduct()
         {
-            new Actions(drv).Click(search_hrefKvas).Build().Perform();
+            new Actions(drv).Click(search_hrefNewProduct).Build().Perform();
            
         }
     }
